@@ -12,9 +12,13 @@ export default class Post extends BaseModel {
   public content: string
 
   @column()
-  public owner_id: string
+  public userId: number
 
-  // @belongsTo(() => User)
-  // public user: BelongsTo<typeof User>
+  @column()
+  public created_at: Date
+
+  @belongsTo(() => User)
+  public user: BelongsTo<typeof User>
+
 }
 

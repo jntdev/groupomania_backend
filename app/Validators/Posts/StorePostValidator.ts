@@ -26,7 +26,7 @@ export default class StorePostValidator {
   public schema = schema.create({
     title: schema.string(),
     content: schema.string(),
-    owner_id: schema.string(),
+    user_id: schema.number.optional(),
   })
 
   /**

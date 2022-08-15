@@ -31,7 +31,7 @@ Route.group(() => {
     Route.get('users', 'AuthController.getAll')
     Route.put('users', 'AuthController.update')
     Route.resource('posts', 'PostsController').apiOnly()
-  }).middleware('auth')
+  }).middleware(['auth'])
 }).prefix('/api')
 
 

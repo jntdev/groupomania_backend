@@ -26,7 +26,7 @@ export default class UpdatePostValidator {
   public schema = schema.create({
     title: schema.string.optional(),
     content: schema.string.optional(),
-    owner_id: schema.string.optional(),
+    user_id: schema.number.optional(),
   })
 
   /**

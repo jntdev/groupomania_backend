@@ -8,8 +8,8 @@ export default class Like extends BaseModel {
   public like: boolean
 
   @column({ serializeAs: null })
-  public userId: string
+  public user_id: string
 
   @column({ serializeAs: null })
-  public postId: string
+  public post_id: string
 }

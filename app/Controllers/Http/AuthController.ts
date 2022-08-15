@@ -10,19 +10,24 @@ export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
     const payload = await request.validate(StoreUserValidator)
     const user = await User.create(payload)
-    console.log(response)
+    //console.log(response)
     return response.created({ user }) // 201 CREATED
-    //Trouver comment generer un token pour log.
   }
 
   public async login({ auth, request, response }: HttpContextContract) {
     const { email, password } = await request.validate(LoginValidator)
     const token = await auth.attempt(email, password)
+    //console.log(token)
     const user = auth.user!
-    console.log(response)
+    //console.log(user.is_admin)
+    //console.log(response)
     return response.ok({
-      "token": token,
-      ...user.serialize(),
+      "token": token.token,
+      "user": {
+        "id": user.id,
+        "email": user.email,
+        "is_admin": user.is_admin
+      }
     })
   }
 

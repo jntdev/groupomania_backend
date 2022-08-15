@@ -12,8 +12,8 @@ export default class User extends BaseModel {
   @column()
   public password: string
 
-  @column({ serializeAs: null })
-  public role: string
+  @column()
+  public is_admin: boolean
 
   @column()
   public rememberMeToken?: string
@@ -24,6 +24,6 @@ export default class User extends BaseModel {
       user.password = await Hash.make(user.password)
     }
   }
-  // @hasMany(() => Post)
-  // public posts: HasMany<typeof Post>
+  @hasMany(() => Post)
+  public posts: HasMany<typeof Post>
 }
