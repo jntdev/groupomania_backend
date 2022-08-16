@@ -28,9 +28,12 @@ Route.group(() => {
   Route.post('users', 'AuthController.register')
   Route.post('users/login', 'AuthController.login')
   Route.group(() => {
-    Route.get('users', 'AuthController.getAll')
-    Route.put('users', 'AuthController.update')
-    Route.resource('posts', 'PostsController').apiOnly()
+    // Route.resource('posts', 'PostsController').apiOnly()
+    Route.get('posts', 'PostsController.index')
+    Route.post('posts', 'PostsController.store')
+    Route.post('posts/:id', 'PostsController.update')
+    Route.post("post/likes", 'PostsController.likes')
+    Route.get("likes", 'LikesController.index')
   }).middleware(['auth'])
 }).prefix('/api')
 

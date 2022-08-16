@@ -7,8 +7,16 @@ export default class LikesSchema extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
       table.boolean('like').nullable()
-      table.string('user_id', 255).notNullable()
-      table.string('post_id', 30).notNullable()
+      table
+        .integer('user_id')
+        .unsigned()
+        .references('users.id')
+        .onDelete('CASCADE')
+      table
+        .integer('post_id')
+        .unsigned()
+        .references('posts.id')
+        .onDelete('CASCADE')
     })
   }
 

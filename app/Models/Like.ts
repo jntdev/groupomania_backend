@@ -1,4 +1,6 @@
-import { column, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { column, BaseModel, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import Post from './Post'
+import User from './User'
 
 export default class Like extends BaseModel {
   @column({ isPrimary: true })
@@ -8,8 +10,15 @@ export default class Like extends BaseModel {
   public like: boolean
 
   @column({ serializeAs: null })
-  public user_id: string
+  public userId: number
 
   @column({ serializeAs: null })
-  public post_id: string
+  public postId: number
+
+  @belongsTo(() => User)
+  public user: BelongsTo<typeof User>
+
+  @belongsTo(() => Post)
+  public post: BelongsTo<typeof Post>
 }
+

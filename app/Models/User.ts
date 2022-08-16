@@ -1,5 +1,6 @@
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import Like from './Like'
 import Post from './Post'
 
 export default class User extends BaseModel {
@@ -26,4 +27,7 @@ export default class User extends BaseModel {
   }
   @hasMany(() => Post)
   public posts: HasMany<typeof Post>
+
+  @hasMany(() => Like)
+  public likes: HasMany<typeof Like>
 }
