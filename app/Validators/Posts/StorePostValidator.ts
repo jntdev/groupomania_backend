@@ -27,6 +27,7 @@ export default class StorePostValidator {
     title: schema.string(),
     content: schema.string(),
     user_id: schema.number.optional(),
+    img_url: schema.string.optional()
   })
 
   /**

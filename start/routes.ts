@@ -32,6 +32,7 @@ Route.group(() => {
     Route.get('posts', 'PostsController.index')
     Route.post('posts', 'PostsController.store')
     Route.post('posts/:id', 'PostsController.update')
+    Route.delete('posts/:id', 'PostsController.destroy')
     Route.post("post/likes", 'PostsController.likes')
     Route.get("likes", 'LikesController.index')
   }).middleware(['auth'])

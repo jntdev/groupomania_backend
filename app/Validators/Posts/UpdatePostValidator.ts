@@ -27,6 +27,8 @@ export default class UpdatePostValidator {
     title: schema.string.optional(),
     content: schema.string.optional(),
     user_id: schema.number.optional(),
+    img_url: schema.string.optional()
+
   })
 
   /**

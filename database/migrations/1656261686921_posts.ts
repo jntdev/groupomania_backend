@@ -13,7 +13,8 @@ export default class PostsSchema extends BaseSchema {
         .unsigned()
         .references('users.id')
         .onDelete('CASCADE')
-      table.string('liked_by').nullable()
+      table.string('liked_by').defaultTo('[]')
+      table.string("img_url").nullable()
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
     })
   }

@@ -19,7 +19,7 @@ export default class Post extends BaseModel {
   public created_at: Date
 
   @column()
-  public userLikeList: Array<number>
+  public img_url: String
 
   @column()
   public liked_by: String
