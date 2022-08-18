@@ -30,10 +30,21 @@ export default class AuthController {
       }
     })
   }
+  public async me({auth,request,params, response }: HttpContextContract) {
+    console.log(auth.user)
+    console.log("toto")
+    console.log(request.body())
 
-  public async me({ auth, response }: HttpContextContract) {
-    return response.ok(auth.user)
+    const user = await User.findOrFail(params.id)
+    //console.log(user)
+    //if(user.is_admin){
+    //  return response.ok(user)
+    //}else{
+    //  return response.methodNotAllowed(user)
+    //}
+
   }
+
 
   public async getAll({ response }: HttpContextContract) {
     const allUser = await Database.query().from('users').select('*')

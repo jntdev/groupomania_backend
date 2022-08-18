@@ -27,15 +27,15 @@ Route.get('/', async () => {
 Route.group(() => {
   Route.post('users', 'AuthController.register')
   Route.post('users/login', 'AuthController.login')
+  Route.post('users/me/', 'AuthController.me')
   Route.group(() => {
-    // Route.resource('posts', 'PostsController').apiOnly()
+
     Route.get('posts', 'PostsController.index')
     Route.post('posts', 'PostsController.store')
     Route.post('posts/:id', 'PostsController.update')
     Route.delete('posts/:id', 'PostsController.destroy')
     Route.post("post/likes", 'PostsController.likes')
-    Route.get("likes", 'LikesController.index')
-  }).middleware(['auth'])
+  }).middleware(['auth', 'silent'])
 }).prefix('/api')
 
 

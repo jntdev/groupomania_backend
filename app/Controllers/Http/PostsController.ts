@@ -1,11 +1,12 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Post from 'App/Models/Post'
 import StorePostValidator from 'App/Validators/Posts/StorePostValidator'
 import UpdatePostValidator from 'App/Validators/Posts/UpdatePostValidator'
 import Application from '@ioc:Adonis/Core/Application'
 
 export default class PostsController {
-  public async index({ response }: HttpContextContract) {
+  public async index({auth, response }: HttpContextContract) {
+console.log(auth.user)
     const posts = await Post
       .query()
       .preload('user')
@@ -37,7 +38,6 @@ export default class PostsController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    console.log("toto")
     let url =""
     const file = request.file('file', {
       size: '2mb',
@@ -67,15 +67,42 @@ export default class PostsController {
     return response.ok(post)
   }
 
-  public async update({ request, response, params }: HttpContextContract) {
+  public async update({auth, request, response, params }: HttpContextContract) {
+
     const post = await Post.findOrFail(params.id)
     const payload = await request.validate(UpdatePostValidator)
+    let url =""
+    const file = request.file('file', {
+      size: '2mb',
+      extnames: ['jpg', 'jpeg', 'png'],
+    })
+    if(file != null && !file.isValid){
+      return response.send({message: "Le fichier n'est pas au bon format"})
+    }else{
+      if (file != null  && file.isValid) {
+        await file.move(Application.tmpPath('uploads'))
+        url = `http://localhost:3333/uploads/${file.fileName}`
+        payload.img_url = url
+      }
+    }
     post.merge(payload).save()
     return response.ok(post)
   }
 
-  public async destroy({ response, params }: HttpContextContract) {
+  public async destroy({auth,response, params }: HttpContextContract) {
     const post = await Post.findOrFail(params.id)
+    //console.log(post.userId)
+    //const isAdmin = auth.user?.$attributes.is_admin
+    //const userId = auth.user?.$attributes.id
+    //console.log(isAdmin)
+    //if(isAdmin == 1 || post.userId == userId){
+    //  post.delete()
+    //  return response.ok(post)
+    //}else{
+    //  return response.methodNotAllowed()
+    //}
+
+
     post.delete()
     return response.ok(post)
   }

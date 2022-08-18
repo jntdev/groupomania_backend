@@ -10,6 +10,7 @@ import { AuthenticationException } from '@adonisjs/auth/build/standalone'
  * of named middleware.
  */
 export default class AuthMiddleware {
+
   /**
    * The URL to redirect to when request is Unauthorized
    */
@@ -55,6 +56,7 @@ export default class AuthMiddleware {
       guardLastAttempted,
       this.redirectTo,
     )
+
   }
 
   /**
@@ -70,6 +72,7 @@ export default class AuthMiddleware {
      * the config file
      */
     const guards = customGuards.length ? customGuards : [auth.name]
+    console.log(guards)
     await this.authenticate(auth, guards)
     await next()
   }
