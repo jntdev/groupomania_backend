@@ -6,7 +6,10 @@ https://www.oracle.com/fr/database/comment-creer-base-donnees-mysql.html
 
 Une fois paramêtrée :
 - cd build
-Veuillez remplacer les informations utile dans le .env
+Veuillez remplacer les informations utile dans le .env (celui présent dans le dossier build)
 
 Pour lancer le projet,
 - node server.js
+
+Pour profiter de l'application complete,
+Rendez-vous dans le fichier README.ME du projet frontend.
