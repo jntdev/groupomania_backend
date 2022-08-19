@@ -3,24 +3,20 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import StoreUserValidator from "App/Validators/Auth/StoreUserValidator"
 import User from "App/Models/User"
 import LoginValidator from "App/Validators/Auth/LoginValidator"
-import UpdateUserValidator from 'App/Validators/Auth/UpdateUserValidator'
-import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
     const payload = await request.validate(StoreUserValidator)
     const user = await User.create(payload)
-    //console.log(response)
-    return response.created({ user }) // 201 CREATED
+    return response.created({ user })
   }
 
   public async login({ auth, request, response }: HttpContextContract) {
     const { email, password } = await request.validate(LoginValidator)
-    const token = await auth.attempt(email, password)
-    //console.log(token)
+    const token = await auth.use('api').attempt(email, password, {
+      expiresIn: '10 days',
+    })
     const user = auth.user!
-    //console.log(user.is_admin)
-    //console.log(response)
     return response.ok({
       "token": token.token,
       "user": {
@@ -30,31 +26,17 @@ export default class AuthController {
       }
     })
   }
-  public async me({auth,request,params, response }: HttpContextContract) {
-    console.log(auth.user)
-    console.log("toto")
-    console.log(request.body())
 
-    const user = await User.findOrFail(params.id)
-    //console.log(user)
-    //if(user.is_admin){
-    //  return response.ok(user)
-    //}else{
-    //  return response.methodNotAllowed(user)
-    //}
-
+  public async checkifican({ auth, params, response }: HttpContextContract) {
+    await auth.use('api').logout()
+    await auth.use('api').loginViaId(params.id)
+    const token = await auth.use('api').loginViaId(params.id)
+    console.log(token.token)
+    console.log(auth.user?.$attributes)
+    return response.ok({
+      "isAdmin": auth.user?.$attributes.is_admin,
+      "id": auth.user?.$attributes.id,
+      "token": token.token
+    })
   }
-
-
-  public async getAll({ response }: HttpContextContract) {
-    const allUser = await Database.query().from('users').select('*')
-    return response.ok(allUser)
-  }
-
-  public async update({ auth, request, response }: HttpContextContract) {
-    const payload = await request.validate(UpdateUserValidator)
-    const user = await auth.user!.merge(payload).save()
-    return response.ok(user) // 200 OK
-  }
-
 }
