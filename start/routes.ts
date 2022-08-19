@@ -27,9 +27,8 @@ Route.get('/', async () => {
 Route.group(() => {
   Route.post('users', 'AuthController.register')
   Route.post('users/login', 'AuthController.login')
-  Route.post('users/me/', 'AuthController.me')
+  Route.post('users/checkifican/:id', 'AuthController.checkifican')
   Route.group(() => {
-
     Route.get('posts', 'PostsController.index')
     Route.post('posts', 'PostsController.store')
     Route.post('posts/:id', 'PostsController.update')
@@ -37,8 +36,6 @@ Route.group(() => {
     Route.post("post/likes", 'PostsController.likes')
   }).middleware(['auth', 'silent'])
 }).prefix('/api')
-
-
 
 
 
