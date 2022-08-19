@@ -27,10 +27,8 @@ Route.get('/', async () => {
 Route.group(() => {
   Route.post('users', 'AuthController.register')
   Route.post('users/login', 'AuthController.login')
-  Route.post('users/logout/:id', 'AuthController.logout')
   Route.post('users/checkifican/:id', 'AuthController.checkifican')
   Route.group(() => {
-
     Route.get('posts', 'PostsController.index')
     Route.post('posts', 'PostsController.store')
     Route.post('posts/:id', 'PostsController.update')
