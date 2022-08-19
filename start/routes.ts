@@ -34,7 +34,7 @@ Route.group(() => {
     Route.post('posts/:id', 'PostsController.update')
     Route.delete('posts/:id', 'PostsController.destroy')
     Route.post("post/likes", 'PostsController.likes')
-  }).middleware(['auth', 'silent'])
+  }).middleware(['auth'])
 }).prefix('/api')
 
 
