@@ -13,9 +13,7 @@ export default class AuthController {
 
   public async login({ auth, request, response }: HttpContextContract) {
     const { email, password } = await request.validate(LoginValidator)
-    const token = await auth.use('api').attempt(email, password, {
-      expiresIn: '10 days',
-    })
+    const token = await auth.use('api').attempt(email, password)
     const user = auth.user!
     return response.ok({
       "token": token.token,
